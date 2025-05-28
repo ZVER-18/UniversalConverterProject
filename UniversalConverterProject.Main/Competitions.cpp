@@ -832,7 +832,7 @@ void METHOD ChampionsLeagueUniversalSort(CDBPool *comp, DUMMY_ARG, int numGroups
 UChar GetCountryAtAssessmentPosition(UInt position, UChar region) {
     if (region == FifamCompRegion::Europe) {
         UChar lpos = GetAssesmentTable()->GetCountryPosition(FifamCompRegion::Liechtenstein) + 1;
-        UChar rpos = GetAssesmentTable()->GetCountryPosition(FifamCompRegion::Russia) + 1;
+        UChar rpos = GetAssesmentTable()->GetCountryPosition(FifamCompRegion::Gibraltar) + 1;
         if (position >= lpos)
             position += 1;
         if (position >= rpos)
@@ -1772,7 +1772,7 @@ void OnGetSpare(CDBCompetition **ppComp) {
 					CAssessmentTable *at = GetAssesmentTable();
 					for (UInt a = 0; a < at->m_nNumEntries; a++) {
 						CAssessmentInfo *info = &at->m_aEntries[a];
-						if (info->m_nCountryIndex != FifamCompRegion::Russia && info->m_nCountryIndex != FifamCompRegion::Liechtenstein)
+						if (info->m_nCountryIndex != FifamCompRegion::Gibraltar && info->m_nCountryIndex != FifamCompRegion::Liechtenstein)
 							assessmentRanking.emplace_back(info->m_nCountryIndex, info->m_fYear_2);
 					}
 					Utils::Sort(assessmentRanking, [](Pair<UChar, Float> const &a, Pair<UChar, Float> const &b) {
@@ -2090,7 +2090,7 @@ void OnGetSpare(CDBCompetition **ppComp) {
                     };
                     for (UInt i = 1; i <= 55; i++) {
                         UChar countryId = GetAssesmentTable()->GetCountryIdAtPositionLastYear(i);
-                        if (countryId == FifamCompRegion::Russia || countryId == FifamCompRegion::Liechtenstein)
+                        if (countryId == FifamCompRegion::Gibraltar || countryId == FifamCompRegion::Liechtenstein)
                             continue;
                         Bool added = false;
                         CDBLeague *league = GetLeague(countryId, FifamCompType::League, 32); // Youth League A
@@ -3450,7 +3450,7 @@ UChar METHOD GetCountryAtAssessmentPositionLastYear(CAssessmentTable* table, DUM
             UInt positionOriginal = position;
             UChar resultOriginal = table->GetCountryIdAtPositionLastYear(positionOriginal);
             UChar pos1 = table->GetCountryPositionLastYear(FifamCompRegion::Liechtenstein) + 1;
-            UChar pos2 = table->GetCountryPositionLastYear(FifamCompRegion::Russia) + 1;
+            UChar pos2 = table->GetCountryPositionLastYear(FifamCompRegion::Gibraltar) + 1;
             if (pos1 > pos2)
                 std::swap(pos1, pos2);
             if (position >= pos1)
@@ -4474,9 +4474,9 @@ void METHOD OnPoolLaunch(CDBPool* pool) {
         && !pool->IsLaunched();
     CallMethod<0x10F1A40>(pool);
     if (clPoolLaunching) {
-        UChar numTeams = GetPoolNumberOfTeamsFromCountry(pool, 0, FifamCompRegion::Russia);
+        UChar numTeams = GetPoolNumberOfTeamsFromCountry(pool, 0, FifamCompRegion::Gibraltar);
         if (numTeams == 0) {
-            auto info = GetAssesmentTable()->GetInfoForCountry(FifamCompRegion::Russia);
+            auto info = GetAssesmentTable()->GetInfoForCountry(FifamCompRegion::Gibraltar);
             if (info)
                 info->AddPoints(4.33f);
         }
